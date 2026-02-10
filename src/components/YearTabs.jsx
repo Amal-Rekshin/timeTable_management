@@ -5,7 +5,7 @@ export default function YearTabs({ activeYear, setActiveYear }) {
 
   return (
     <div className="flex gap-3 mb-4">
-      {years.map((year, index) => (
+      {years?.map((year, index) => (
         <button
           key={index}
           onClick={() => setActiveYear(index + 1)}

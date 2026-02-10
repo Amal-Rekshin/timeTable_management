@@ -1,34 +1,35 @@
 // src/components/PeriodRow.jsx
 
 import SubjectCell from "./SubjectCell";
+import { periods } from "../utils/periods";
 
 export default function PeriodRow({ day, data = {}, onEdit }) {
-  // If no data yet, render empty cells
-  const periodIds = Object.keys(data || {});
+  // Ensure data is always an object
+  const safeData = data || {};
+
+  // Get period IDs from the periods configuration to maintain order
+  const periodIds = periods.map(p => p.id);
 
   return (
     <tr>
       <td className="border p-2 font-semibold bg-gray-50">{day}</td>
 
-      {periodIds.length > 0 ? (
-        periodIds.map((periodId) => (
+      {periodIds.map((periodId) => {
+        const cell = safeData[periodId];
+        
+        return (
           <SubjectCell
             key={periodId}
             periodId={periodId}
-            cell={data[periodId]}
+            cell={cell}
             onClick={() => {
-              if (data[periodId].type === "class") {
+              if (cell?.type === "class") {
                 onEdit(periodId);
               }
             }}
           />
-        ))
-      ) : (
-        // Render placeholders while timetable loads for the first time
-        <td className="text-center p-2 text-gray-400" colSpan={8}>
-          Loading...
-        </td>
-      )}
+        );
+      })}
     </tr>
   );
 }

@@ -5,7 +5,7 @@ export default function SectionTabs({ activeSection, setActiveSection }) {
 
   return (
     <div className="flex gap-3 mb-4">
-      {sections.map((sec) => (
+      {sections?.map((sec) => (
         <button
           key={sec}
           onClick={() => setActiveSection(sec)}
